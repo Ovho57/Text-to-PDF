@@ -7,6 +7,7 @@ import argparse
 import sys
 import platform
 from pathlib import Path
+import os
 from xml.sax.saxutils import escape
 
 def build_parser() -> argparse.ArgumentParser:
@@ -44,7 +45,7 @@ def text_to_story(text: str):
     from reportlab.platypus import Paragraph, Spacer
     style = ParagraphStyle(
         "TextLine", fontName="Courier", fontSize=9, leading=12,
-        spaceAfter=0, wordWrap="CJK", splitLongWords=True,
+        spaceAfter=0, splitLongWords=True,
     )
     story = []
     for line in text.splitlines():
@@ -52,7 +53,10 @@ def text_to_story(text: str):
             story.append(Spacer(1, 5))
             continue
         line = line.expandtabs(4)
-        escaped = escape(line).replace(" ", "&#160;")
+        # Preserve indentation without turning every space into a non-breaking
+        # space. Ordinary spaces must remain breakable so long lines wrap.
+        leading_spaces = len(line) - len(line.lstrip(" "))
+        escaped = ("&#160;" * leading_spaces) + escape(line[leading_spaces:])
         story.append(Paragraph(escaped, style))
     if not story:
         story.append(Paragraph("(empty file)", style))
@@ -124,11 +128,11 @@ def browse_for_text_file() -> Path | None:
     """Browse directories and files in the terminal and select a .txt file."""
     # ANSI colors: folders blue, .txt files green, other files yellow.
     # Disable colors when output is redirected or NO_COLOR is set.
-    use_color = sys.stdout.isatty() and "NO_COLOR" not in __import__("os").environ
-    blue = "\\033[1;34m" if use_color else ""
-    green = "\\033[1;32m" if use_color else ""
-    yellow = "\\033[33m" if use_color else ""
-    reset = "\\033[0m" if use_color else ""
+    use_color = sys.stdout.isatty() and "NO_COLOR" not in os.environ
+    blue = "\033[1;34m" if use_color else ""
+    green = "\033[1;32m" if use_color else ""
+    yellow = "\033[33m" if use_color else ""
+    reset = "\033[0m" if use_color else ""
 
     raw = input("Folder to browse (Enter = current Ubuntu folder): ").strip()
     current = Path(raw.strip('"')).expanduser() if raw else Path.cwd()
@@ -139,7 +143,7 @@ def browse_for_text_file() -> Path | None:
         except OSError as exc:
             print(f"Cannot read folder: {exc}")
             return None
-        print(f"\\nFolder: {current}")
+        print(f"\nFolder: {current}")
         print("  [..] Go to parent folder")
         for number, entry in enumerate(entries, start=1):
             if entry.is_dir():
@@ -149,7 +153,7 @@ def browse_for_text_file() -> Path | None:
             else:
                 tag, color = "[FILE]", yellow
             print(f"  [{number}] {color}{tag}{entry.name}{reset}")
-        answer = input("\\nEnter a number to open/select, or Q to cancel: ").strip().lower()
+        answer = input("\nEnter a number to open/select, or Q to cancel: ").strip().lower()
         if answer == "q":
             return None
         if answer == "..":
@@ -188,13 +192,13 @@ def interactive_menu() -> int:
     print("Convert your plain-text files into clean PDFs.")
     print("Your files stay on this computer; nothing is uploaded.")
     while True:
-        print("\\n  [1] Choose a .txt file and convert it")
+        print("\n  [1] Choose a .txt file and convert it")
         print("  [2] Browse folders and files")
         print("  [3] Help — what does this tool do?")
         print("  [4] Commands and options")
         print("  [5] Troubleshooting guide")
         print("  [0] Exit")
-        choice = input("\\nSelect an option: ").strip()
+        choice = input("\nSelect an option: ").strip()
 
         if choice in ("1", "2"):
             chosen = choose_text_file() if choice == "1" else browse_for_text_file()
@@ -206,12 +210,12 @@ def interactive_menu() -> int:
             overwrite = input("Replace an existing PDF if needed? [y/N]: ").strip().lower() == "y"
             try:
                 result = convert_checked(chosen, save_folder, overwrite=overwrite)
-                print(f"\\n✓ PDF created: {result}")
+                print(f"\n✓ PDF created: {result}")
             except (OSError, ValueError) as exc:
-                print(f"\\n✗ Could not convert: {exc}")
+                print(f"\n✗ Could not convert: {exc}")
                 print("Choose [5] Troubleshooting for help.")
         elif choice == "3":
-            print("\\nWHAT IT DOES")
+            print("\nWHAT IT DOES")
             print("- Converts plain UTF-8 .txt files into paginated PDF documents.")
             print("- Keeps blank lines and indentation; wraps long lines.")
             print("- Creates output folders automatically.")
@@ -220,7 +224,7 @@ def interactive_menu() -> int:
             print("- It does not directly convert .docx or .md files.")
             print("- It does not upload, scan, or transmit your files.")
             print("- You choose the file yourself using the file picker.")
-            print("\\nFILE BROWSER COLORS (OPTION 2)")
+            print("\nFILE BROWSER COLORS (OPTION 2)")
             print("- Blue [DIR] = folder/directory. Select it to open it.")
             print("- Green [TXT] = .txt file. Select it to convert it.")
             print("- Yellow [FILE] = other file type; it cannot be selected for conversion.")
