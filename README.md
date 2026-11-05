@@ -1,6 +1,6 @@
 # Text-to-PDF (Linux / Ubuntu)
 
-A beginner-friendly Python program that converts UTF-8 `.txt` files into paginated PDF documents. It is supported **on Linux/Ubuntu only**.
+A beginner-friendly Python program that converts UTF-8 `.txt` files into paginated PDF documents. It is supported **on Linux/Ubuntu only** and requires **Python 3.10 or newer**.
 
 Your files stay on your computer. The converter does not upload or transmit them.
 
