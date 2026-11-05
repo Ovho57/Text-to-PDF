@@ -193,19 +193,19 @@ def interactive_menu() -> int:
     print("Your files stay on this computer; nothing is uploaded.")
     # Menu color palette: options cyan, descriptions white, headings bright yellow.
     use_color = sys.stdout.isatty() and "NO_COLOR" not in os.environ
-    cyan = "\\033[1;36m" if use_color else ""
-    white = "\\033[0;37m" if use_color else ""
-    bright_yellow = "\\033[1;93m" if use_color else ""
-    menu_reset = "\\033[0m" if use_color else ""
+    cyan = "\033[1;36m" if use_color else ""
+    white = "\033[0;37m" if use_color else ""
+    bright_yellow = "\033[1;93m" if use_color else ""
+    menu_reset = "\033[0m" if use_color else ""
 
     while True:
-        print("\\n  " + cyan + "[1]" + menu_reset + " " + white + "Choose a .txt file and convert it" + menu_reset)
+        print("\n  " + cyan + "[1]" + menu_reset + " " + white + "Choose a .txt file and convert it" + menu_reset)
         print("  " + cyan + "[2]" + menu_reset + " " + white + "Browse folders and files" + menu_reset)
         print("  " + cyan + "[3]" + menu_reset + " " + white + "Help — what does this tool do?" + menu_reset)
         print("  " + cyan + "[4]" + menu_reset + " " + white + "Commands and options" + menu_reset)
         print("  " + cyan + "[5]" + menu_reset + " " + white + "Troubleshooting guide" + menu_reset)
         print("  " + cyan + "[0]" + menu_reset + " " + white + "Exit" + menu_reset)
-        choice = input("\\n" + bright_yellow + "Select an option: " + menu_reset).strip()
+        choice = input("\n" + bright_yellow + "Select an option: " + menu_reset).strip()
 
         if choice in ("1", "2"):
             chosen = choose_text_file() if choice == "1" else browse_for_text_file()
@@ -222,19 +222,19 @@ def interactive_menu() -> int:
                 print(f"\n✗ Could not convert: {exc}")
                 print("Choose [5] Troubleshooting for help.")
         elif choice == "3":
-            print("\nWHAT IT DOES")
+            print("\n" + bright_yellow + "WHAT IT DOES" + menu_reset)
             print("- Converts plain UTF-8 .txt files into paginated PDF documents.")
             print("- Keeps blank lines and indentation; wraps long lines.")
             print("- Creates output folders automatically.")
             print("- Protects existing PDFs unless you approve replacing them.")
-            print("\nWHAT IT DOES NOT DO")
+            print("\n" + bright_yellow + "WHAT IT DOES NOT DO" + menu_reset)
             print("- It does not directly convert .docx or .md files.")
             print("- It does not upload, scan, or transmit your files.")
             print("- You choose the file yourself using the file picker.")
-            print("\nFILE BROWSER COLORS (OPTION 2)")
-            print("\\033[1;34m" + "- Blue [DIR] = folder/directory. Select it to open it." + menu_reset)
-            print("\\033[1;32m" + "- Green [TXT] = .txt file. Select it to convert it." + menu_reset)
-            print("\\033[33m" + "- Yellow [FILE] = other file type; it cannot be selected for conversion." + menu_reset)
+            print("\n" + bright_yellow + "FILE BROWSER COLORS (OPTION 2)" + menu_reset)
+            print("\033[1;34m" + "- Blue [DIR] = folder/directory. Select it to open it." + menu_reset)
+            print("\033[1;32m" + "- Green [TXT] = .txt file. Select it to convert it." + menu_reset)
+            print("\033[33m" + "- Yellow [FILE] = other file type; it cannot be selected for conversion." + menu_reset)
             print(white + "- Menu numbers are cyan; descriptions are white; headings are bright yellow." + menu_reset)
             print(white + "- Colors may not appear in terminals that do not support ANSI colors." + menu_reset)
         elif choice == "4":
