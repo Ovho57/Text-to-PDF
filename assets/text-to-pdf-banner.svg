@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101827"/><stop offset="1" stop-color="#1e3a5f"/></linearGradient><linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs>
+<rect width="1200" height="360" rx="28" fill="url(#bg)"/><circle cx="1080" cy="60" r="170" fill="#38bdf8" opacity=".08"/><circle cx="1040" cy="310" r="140" fill="#a78bfa" opacity=".08"/>
+<rect x="70" y="58" width="1060" height="244" rx="18" fill="#0b1220" stroke="#334155" stroke-width="2"/>
+<circle cx="105" cy="88" r="7" fill="#fb7185"/><circle cx="129" cy="88" r="7" fill="#fbbf24"/><circle cx="153" cy="88" r="7" fill="#34d399"/>
+<text x="95" y="164" font-family="DejaVu Sans, Arial, sans-serif" font-size="52" font-weight="700" fill="#f8fafc">Text-to-PDF</text>
+<text x="98" y="210" font-family="DejaVu Sans, Arial, sans-serif" font-size="24" fill="#cbd5e1">Convert plain text files into clean PDFs</text><text x="98" y="248" font-family="DejaVu Sans, Arial, sans-serif" font-size="24" fill="#cbd5e1">directly from your Linux terminal.</text>
+<rect x="98" y="270" width="230" height="5" rx="2.5" fill="url(#accent)"/><text x="1010" y="258" text-anchor="middle" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="600" fill="#7dd3fc">PYTHON • LINUX</text></svg>
