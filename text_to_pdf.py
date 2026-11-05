@@ -121,10 +121,10 @@ def choose_text_file() -> Path | None:
 
 def interactive_menu() -> int:
     # ANSI escape sequences color the banner in supported terminals.
-    reset = "\\033[0m"
-    green = "\\033[32m"
-    bright_green = "\\033[1;92m"
-    bold = "\\033[1m"
+    reset = "\033[0m"
+    green = "\033[32m"
+    bright_green = "\033[1;92m"
+    bold = "\033[1m"
     print()
     print(bright_green + "████████╗███████╗██╗  ██╗████████╗" + reset)
     print(bright_green + "╚══██╔══╝██╔════╝╚██╗██╔╝╚══██╔══╝" + reset)
