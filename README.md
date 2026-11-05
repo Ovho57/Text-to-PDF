@@ -1,6 +1,6 @@
 # Text-to-PDF
 
-A small Python command-line tool that converts a local UTF-8 `.txt` file into a paginated PDF. **Your text stays on your computer**—the program does not upload or transmit files.
+A Python text-to-PDF utility with a beginner-friendly interactive terminal menu and command-line mode. It converts local UTF-8 `.txt` files into paginated PDFs. **Your text stays on your computer**—the program does not upload or transmit files.
 
 ## What this tool does
 
@@ -9,13 +9,13 @@ A small Python command-line tool that converts a local UTF-8 `.txt` file into a 
 - Wraps long lines and supports multiple PDF pages.
 - Creates the destination folder automatically.
 - Protects existing PDFs from accidental replacement.
-- Runs on Windows, macOS, and Linux.
+- Runs on Windows, macOS, and Linux.\n- Opens an interactive menu when launched without arguments.\n- Lets you choose a local text file with a file picker (or type its path if the picker is unavailable).\n- Includes Help, Commands, and Troubleshooting menu sections.
 
 > **Note:** This tool converts plain text. It does not convert Word files (`.docx`) or Markdown files (`.md`) directly. Copy/export those to plain text first.
 
 ---
 
-## 1. What you need
+## Quick start: interactive menu\n\nRun the script without a filename to open the menu:\n\nWindows:\n\n```cmd\npython text_to_pdf.py\n```\n\nUbuntu/Linux:\n\n```bash\npython3 text_to_pdf.py\n```\n\nChoose **1** to browse for a `.txt` file and convert it. The file picker only accesses the file you select; it does not upload anything. Choose **2** for Help, **3** for commands, or **4** for troubleshooting. Some Ubuntu/WSL environments do not have a desktop file picker; in that case, type the full path when prompted.\n\nFor detailed fixes, see the [Troubleshooting Center](troubleshooting/README.md).\n\n## 1. What you need
 
 Before using the tool, make sure you have:
 
