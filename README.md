@@ -1,109 +1,182 @@
 # Text-to-PDF (Linux / Ubuntu)
 
-A beginner-friendly Python tool for converting local UTF-8 `.txt` files into paginated PDFs. This project is supported **only on Linux, including Ubuntu**.
+A beginner-friendly Python program that converts UTF-8 `.txt` files into paginated PDF documents. It is supported **on Linux/Ubuntu only**.
 
-Your files stay on your computer. The program does not upload or transmit them.
+Your files stay on your computer. The converter does not upload or transmit them.
 
 ## Features
 
-- Converts plain-text `.txt` files to PDF.
-- Preserves line breaks, blank lines, indentation, and tabs.
-- Wraps long lines and supports multi-page PDFs.
-- Interactive terminal menu with Help, Commands, and Troubleshooting.
-- GUI file picker when a desktop environment and Tkinter are available.
-- Terminal path entry when the file picker is unavailable.
-- Prevents accidental replacement of existing PDFs.
+- Convert plain text files to PDF.
+- Preserve line breaks, blank lines, and indentation.
+- Wrap long lines and create multiple PDF pages.
+- Choose files using a graphical picker (when available).
+- **Browse folders and files from the terminal** when you want to navigate manually.
+- Set a different PDF output folder.
+- Avoid overwriting an existing PDF unless you approve it.
 
-> It does not directly convert Word (`.docx`) or Markdown (`.md`) files. Save or export those as plain text first.
+> Word (`.docx`) and Markdown (`.md`) files are not directly supported. Export or save them as `.txt` first.
 
-## Requirements
+## Quick start: Ubuntu
 
-- Linux (Ubuntu recommended)
-- Python 3.10+
-- ReportLab
-- Tkinter (optional; required only for the graphical file picker)
+### 1. Install dependencies
 
-## Install on Ubuntu
-
-Open Terminal and run:
+Open Ubuntu Terminal and run:
 
 ```bash
 sudo apt update
 sudo apt install -y python3 python3-reportlab python3-tk git
 ```
 
-Check Python:
-
-```bash
-python3 --version
-```
-
-## Download the project
-
-Clone the repository:
+### 2. Download the repository
 
 ```bash
 git clone https://github.com/Ovho57/Text-to-PDF.git
 cd Text-to-PDF
 ```
 
-Or download just the script:
+If you already downloaded it, update the existing folder instead:
 
 ```bash
-mkdir -p ~/Text-to-PDF
 cd ~/Text-to-PDF
-curl -L "https://raw.githubusercontent.com/Ovho57/Text-to-PDF/main/text_to_pdf.py" -o text_to_pdf.py
+git pull
 ```
 
-## Run the interactive menu
-
-From the project directory:
+### 3. Start the program
 
 ```bash
 python3 text_to_pdf.py
 ```
 
-Choose **1** to select a `.txt` file and convert it. Choose **2** for Help, **3** for commands, **4** for troubleshooting, or **0** to exit.
+### 4. Menu options
 
-If the graphical picker cannot open (for example, on Ubuntu Server or a headless terminal), the program asks you to enter the full path to the text file.
+- **1 — Choose a .txt file and convert it:** opens a graphical file picker if available.
+- **2 — Browse folders and files:** navigate folders in the terminal, list their contents, and select a text file.
+- **3 — Help:** learn what the program does.
+- **4 — Commands and options:** view command-line examples.
+- **5 — Troubleshooting:** see common fixes.
+- **0 — Exit.**
 
-## Convert using terminal commands
+The PDF is saved beside the original text file by default. You can enter a different output folder when asked.
 
-Convert a file beside the source:
+## Browse files from the terminal
+
+Choose menu option **2**. When asked for a folder, type the directory you want to explore. For example:
+
+```text
+/mnt/c/Users/DELL/Desktop
+```
+
+The browser lists files and folders. Type a folder's number to enter it, `..` to go to the parent folder, or `q` to cancel. Select a `.txt` file by entering its number.
+
+For other directories, enter their full Linux path. Paths with spaces should be wrapped in quotes when typed as a command.
+
+## Ubuntu under Windows (WSL): access Windows files
+
+If Ubuntu is installed through WSL (Windows Subsystem for Linux), Windows drives are normally mounted under `/mnt/`.
+
+- Windows C: drive → `/mnt/c/`
+- Windows Desktop → often `/mnt/c/Users/DELL/Desktop`
+- Windows Downloads → often `/mnt/c/Users/DELL/Downloads`
+
+Your Windows username may not be `DELL`. Find the correct folder:
+
+```bash
+ls /mnt/c/Users
+```
+
+Then list Desktop files (replace `YOUR_USERNAME`):
+
+```bash
+ls "/mnt/c/Users/YOUR_USERNAME/Desktop"
+```
+
+To change into the Windows Desktop directory:
+
+```bash
+cd "/mnt/c/Users/YOUR_USERNAME/Desktop"
+```
+
+To open Windows File Explorer at your current WSL folder:
+
+```bash
+explorer.exe .
+```
+
+### Example: converting a Windows Desktop text file
+
+```bash
+python3 ~/Text-to-PDF/text_to_pdf.py "/mnt/c/Users/YOUR_USERNAME/Desktop/notes.txt"
+```
+
+The resulting PDF is normally created beside `notes.txt`, unless you specify another output location.
+
+## Move or copy files between Ubuntu and Windows
+
+### Copy a Windows file into Ubuntu
+
+Example: copy a text file from Windows Desktop to your Ubuntu home folder:
+
+```bash
+cp "/mnt/c/Users/YOUR_USERNAME/Desktop/notes.txt" ~/
+```
+
+### Move a Windows file into Ubuntu
+
+```bash
+mv "/mnt/c/Users/YOUR_USERNAME/Desktop/notes.txt" ~/
+```
+
+**Note:** `mv` removes it from the original Windows folder after moving. Use `cp` if you want to keep the original.
+
+### Copy a PDF from Ubuntu to Windows Desktop
+
+```bash
+cp ~/Text-to-PDF/notes.pdf "/mnt/c/Users/YOUR_USERNAME/Desktop/"
+```
+
+Replace the example filenames and username with your actual ones.
+
+## Command-line usage
+
+Run commands from inside the repository:
+
+```bash
+cd ~/Text-to-PDF
+```
+
+Convert a text file (PDF beside source):
 
 ```bash
 python3 text_to_pdf.py notes.txt
 ```
 
-Save into a folder (created automatically):
+Save into a specific folder (it will be created if needed):
 
 ```bash
 python3 text_to_pdf.py notes.txt --save output
 ```
 
-Choose a PDF filename:
+Set the PDF filename:
 
 ```bash
 python3 text_to_pdf.py notes.txt --output Notes.pdf
 ```
 
-Replace an existing PDF only when you explicitly allow it:
+Allow replacing an existing PDF:
 
 ```bash
 python3 text_to_pdf.py notes.txt --overwrite
 ```
 
-Use quotation marks for filenames or paths containing spaces:
+Paths containing spaces need quotation marks:
 
 ```bash
-python3 text_to_pdf.py "My Notes.txt" --save "My PDFs"
+python3 text_to_pdf.py "Biology ocho.txt"
 ```
 
 ## Troubleshooting
 
 ### `python3: command not found`
-
-Install Python:
 
 ```bash
 sudo apt update
@@ -111,8 +184,6 @@ sudo apt install -y python3
 ```
 
 ### `No module named reportlab`
-
-Install ReportLab from Ubuntu packages:
 
 ```bash
 sudo apt install -y python3-reportlab
@@ -126,40 +197,42 @@ Install Tkinter:
 sudo apt install -y python3-tk
 ```
 
-If you are on a server or do not have a desktop environment, type the full path to your `.txt` file when prompted.
+Or use menu option **2 — Browse folders and files**. You can also run the script with a file path directly.
 
-### `can't open file 'text_to_pdf.py'`
+### `can't open file ... text_to_pdf.py`
 
-Check your current directory and files:
+Check your current folder:
 
 ```bash
 pwd
 ls -la
 ```
 
-Change to the project directory:
+Go to the project directory:
 
 ```bash
 cd ~/Text-to-PDF
 ```
 
-Confirm the filename is exactly `text_to_pdf.py` (underscores, not hyphens).
+The script is named **`text_to_pdf.py`** (underscores, not hyphens).
 
-### Input file not found
+### `Input file does not exist`
 
-Check the file path with `ls`. You can pass an absolute path:
+Check the exact location and filename:
 
 ```bash
-python3 text_to_pdf.py "/home/your-user/Documents/notes.txt"
+ls "/path/to/the/folder"
 ```
+
+If the filename has spaces, wrap the entire path in double quotes. In WSL, Windows files are usually under `/mnt/c/Users/`.
 
 ### PDF already exists
 
-Choose another output filename or intentionally permit replacement using `--overwrite`.
+Choose a different filename or use `--overwrite` if you intend to replace the old PDF.
 
 ### Permission denied
 
-Save to a directory owned by your user, such as `~/Documents` or your project folder. Avoid using `sudo` to run the converter.
+Choose a folder you own, such as your Ubuntu home directory or Windows Desktop through WSL. Avoid running the converter with `sudo`.
 
 ## Verify ReportLab
 
@@ -168,8 +241,6 @@ python3 -c "import reportlab; print('ReportLab is installed')"
 ```
 
 ## Run tests
-
-From the repository folder:
 
 ```bash
 python3 -m unittest -v
