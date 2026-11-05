@@ -120,6 +120,41 @@ def choose_text_file() -> Path | None:
         return Path(raw_path.strip('"')) if raw_path else None
 
 
+def browse_for_text_file() -> Path | None:
+    """Browse directories and files in the terminal and select a .txt file."""
+    raw = input("Folder to browse (Enter = current Ubuntu folder): ").strip()
+    current = Path(raw.strip('"')).expanduser() if raw else Path.cwd()
+    while True:
+        try:
+            current = current.resolve()
+            entries = sorted(current.iterdir(), key=lambda p: (not p.is_dir(), p.name.lower()))
+        except OSError as exc:
+            print(f"Cannot read folder: {exc}")
+            return None
+        print(f"\\nFolder: {current}")
+        print("  [..] Go to parent folder")
+        for number, entry in enumerate(entries, start=1):
+            tag = "[DIR] " if entry.is_dir() else "      "
+            print(f"  [{number}] {tag}{entry.name}")
+        answer = input("\\nEnter a number to open/select, or Q to cancel: ").strip().lower()
+        if answer == "q":
+            return None
+        if answer == "..":
+            current = current.parent
+            continue
+        try:
+            selected = entries[int(answer) - 1]
+        except (ValueError, IndexError):
+            print("Invalid selection.")
+            continue
+        if selected.is_dir():
+            current = selected
+        elif selected.suffix.lower() == ".txt":
+            return selected
+        else:
+            print("Choose a .txt file or folder.")
+
+
 def interactive_menu() -> int:
     # ANSI escape sequences color the banner in supported terminals.
     reset = "\033[0m"
@@ -140,15 +175,16 @@ def interactive_menu() -> int:
     print("Convert your plain-text files into clean PDFs.")
     print("Your files stay on this computer; nothing is uploaded.")
     while True:
-        print("\n  [1] Choose a .txt file and convert it")
-        print("  [2] Help — what does this tool do?")
-        print("  [3] Commands and options")
-        print("  [4] Troubleshooting guide")
+        print("\\n  [1] Choose a .txt file and convert it")
+        print("  [2] Browse folders and files")
+        print("  [3] Help — what does this tool do?")
+        print("  [4] Commands and options")
+        print("  [5] Troubleshooting guide")
         print("  [0] Exit")
-        choice = input("\nSelect an option: ").strip()
+        choice = input("\\nSelect an option: ").strip()
 
-        if choice == "1":
-            chosen = choose_text_file()
+        if choice in ("1", "2"):
+            chosen = choose_text_file() if choice == "1" else browse_for_text_file()
             if chosen is None:
                 print("Selection cancelled.")
                 continue
@@ -157,12 +193,12 @@ def interactive_menu() -> int:
             overwrite = input("Replace an existing PDF if needed? [y/N]: ").strip().lower() == "y"
             try:
                 result = convert_checked(chosen, save_folder, overwrite=overwrite)
-                print(f"\n✓ PDF created: {result}")
+                print(f"\\n✓ PDF created: {result}")
             except (OSError, ValueError) as exc:
-                print(f"\n✗ Could not convert: {exc}")
-                print("Choose [4] Troubleshooting for help.")
-        elif choice == "2":
-            print("\nWHAT IT DOES")
+                print(f"\\n✗ Could not convert: {exc}")
+                print("Choose [5] Troubleshooting for help.")
+        elif choice == "3":
+            print("\\nWHAT IT DOES")
             print("- Converts plain UTF-8 .txt files into paginated PDF documents.")
             print("- Keeps blank lines and indentation; wraps long lines.")
             print("- Creates output folders automatically.")
@@ -171,7 +207,7 @@ def interactive_menu() -> int:
             print("- It does not directly convert .docx or .md files.")
             print("- It does not upload, scan, or transmit your files.")
             print("- You choose the file yourself using the file picker.")
-        elif choice == "3":
+        elif choice == "4":
             print("\nCOMMANDS")
             print("  python text_to_pdf.py                 Open this menu")
             print("  python text_to_pdf.py notes.txt       Convert beside the input")
@@ -180,7 +216,7 @@ def interactive_menu() -> int:
             print("  python text_to_pdf.py notes.txt -o Notes.pdf")
             print("  python text_to_pdf.py notes.txt --overwrite")
             print("\nOPTIONS: -s/--save FOLDER, -o/--output FILE.pdf, --overwrite, -h/--help")
-        elif choice == "4":
+        elif choice == "5":
             print("\nTROUBLESHOOTING")
             print("- No module named reportlab: install ReportLab for the Python you run.")
             print("- Ubuntu/Linux: sudo apt update && sudo apt install python3-reportlab")
@@ -193,7 +229,7 @@ def interactive_menu() -> int:
             print("See you next time!")
             return 0
         else:
-            print("Please choose 0, 1, 2, 3, or 4.")
+            print("Please choose 0, 1, 2, 3, 4, or 5.")
 
 
 def main(argv: list[str] | None = None) -> int:
