@@ -120,23 +120,22 @@ def choose_text_file() -> Path | None:
 
 
 def interactive_menu() -> int:
-    # ANSI color codes work in Ubuntu and most modern terminals.
+    # ANSI escape sequences color the banner in supported terminals.
     reset = "\\033[0m"
-    cyan = "\\033[96m"
-    magenta = "\\033[95m"
-    yellow = "\\033[93m"
-    green = "\\033[92m"
+    green = "\\033[32m"
+    bright_green = "\\033[1;92m"
+    bold = "\\033[1m"
     print()
-    print(cyan + "████████╗███████╗██╗  ██╗████████╗" + reset)
-    print(cyan + "╚══██╔══╝██╔════╝╚██╗██╔╝╚══██╔══╝" + reset)
-    print(magenta + "   ██║   █████╗   ╚███╔╝    ██║   " + reset)
-    print(magenta + "   ██║   ██╔══╝   ██╔██╗    ██║   " + reset)
-    print(yellow + "   ██║   ███████╗██╔╝ ██╗   ██║   " + reset)
-    print(yellow + "   ╚═╝   ╚══════╝╚═╝  ╚═╝   ╚═╝   " + reset)
-    print(green + "       T E X T  -  T O  -  P D F" + reset)
-    print(cyan + "╔══════════════════════════════════════════════╗" + reset)
-    print(cyan + "║" + reset + "       " + magenta + "YOUR TEXT. YOUR PDF. YOUR CONTROL." + reset + "       " + cyan + "║" + reset)
-    print(cyan + "╚══════════════════════════════════════════════╝" + reset)
+    print(bright_green + "████████╗███████╗██╗  ██╗████████╗" + reset)
+    print(bright_green + "╚══██╔══╝██╔════╝╚██╗██╔╝╚══██╔══╝" + reset)
+    print(green + "   ██║   █████╗   ╚███╔╝    ██║   " + reset)
+    print(green + "   ██║   ██╔══╝   ██╔██╗    ██║   " + reset)
+    print(bright_green + "   ██║   ███████╗██╔╝ ██╗   ██║   " + reset)
+    print(green + "   ╚═╝   ╚══════╝╚═╝  ╚═╝   ╚═╝   " + reset)
+    print(bold + bright_green + "       T E X T  -  T O  -  P D F" + reset)
+    print(green + "╔══════════════════════════════════════════════╗" + reset)
+    print(green + "║" + reset + "       " + bold + bright_green + "YOUR TEXT. YOUR PDF. YOUR CONTROL." + reset + "       " + green + "║" + reset)
+    print(green + "╚══════════════════════════════════════════════╝" + reset)
     print("Convert your plain-text files into clean PDFs.")
     print("Your files stay on this computer; nothing is uploaded.")
     while True:
