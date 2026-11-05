@@ -39,6 +39,8 @@ def resolve_output(input_path: Path, save_folder: Path | None, output: Path | No
 
 def text_to_story(text: str):
     """Create flowables while preserving line breaks and leading spaces."""
+    from reportlab.lib.styles import ParagraphStyle
+    from reportlab.platypus import Paragraph, Spacer
     style = ParagraphStyle(
         "TextLine", fontName="Courier", fontSize=9, leading=12,
         spaceAfter=0, wordWrap="CJK", splitLongWords=True,
@@ -57,6 +59,9 @@ def text_to_story(text: str):
 
 
 def convert(input_path: Path, output_path: Path) -> None:
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.units import mm
+    from reportlab.platypus import SimpleDocTemplate
     try:
         text = input_path.read_text(encoding="utf-8")
     except UnicodeDecodeError as exc:
