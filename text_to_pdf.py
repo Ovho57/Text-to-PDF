@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+import platform
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -182,10 +183,9 @@ def interactive_menu() -> int:
         elif choice == "4":
             print("\nTROUBLESHOOTING")
             print("- No module named reportlab: install ReportLab for the Python you run.")
-            print("- Ubuntu: sudo apt update && sudo apt install python3-reportlab")
-            print("- Windows: python -m pip install reportlab (or py -m pip install reportlab)")
+            print("- Ubuntu/Linux: sudo apt update && sudo apt install python3-reportlab")
             print("- No module named pip: see troubleshooting/UBUNTU_PYTHON_PIP.md")
-            print("- Python command not found: see troubleshooting/README.md")
+            print("- Python 3 command not found: install python3 with your Linux package manager.")
             print("- File picker not opening: enter the full .txt path when prompted.")
             print("- Output already exists: choose another filename or approve overwrite.")
             print("- More detailed solutions: open the repository's troubleshooting folder.")
@@ -197,6 +197,11 @@ def interactive_menu() -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    if platform.system() != "Linux":
+        print("Text-to-PDF is supported on Linux and Ubuntu only.")
+        print("Please run it on a Linux/Ubuntu system.")
+        return 1
+
     parser = build_parser()
     args = parser.parse_args(argv)
     if args.input is None:
