@@ -122,6 +122,14 @@ def choose_text_file() -> Path | None:
 
 def browse_for_text_file() -> Path | None:
     """Browse directories and files in the terminal and select a .txt file."""
+    # ANSI colors: folders blue, .txt files green, other files yellow.
+    # Disable colors when output is redirected or NO_COLOR is set.
+    use_color = sys.stdout.isatty() and "NO_COLOR" not in __import__("os").environ
+    blue = "\\033[1;34m" if use_color else ""
+    green = "\\033[1;32m" if use_color else ""
+    yellow = "\\033[33m" if use_color else ""
+    reset = "\\033[0m" if use_color else ""
+
     raw = input("Folder to browse (Enter = current Ubuntu folder): ").strip()
     current = Path(raw.strip('"')).expanduser() if raw else Path.cwd()
     while True:
@@ -134,8 +142,13 @@ def browse_for_text_file() -> Path | None:
         print(f"\\nFolder: {current}")
         print("  [..] Go to parent folder")
         for number, entry in enumerate(entries, start=1):
-            tag = "[DIR] " if entry.is_dir() else "      "
-            print(f"  [{number}] {tag}{entry.name}")
+            if entry.is_dir():
+                tag, color = "[DIR] ", blue
+            elif entry.suffix.lower() == ".txt":
+                tag, color = "[TXT] ", green
+            else:
+                tag, color = "[FILE]", yellow
+            print(f"  [{number}] {color}{tag}{entry.name}{reset}")
         answer = input("\\nEnter a number to open/select, or Q to cancel: ").strip().lower()
         if answer == "q":
             return None
@@ -207,6 +220,11 @@ def interactive_menu() -> int:
             print("- It does not directly convert .docx or .md files.")
             print("- It does not upload, scan, or transmit your files.")
             print("- You choose the file yourself using the file picker.")
+            print("\\nFILE BROWSER COLORS (OPTION 2)")
+            print("- Blue [DIR] = folder/directory. Select it to open it.")
+            print("- Green [TXT] = .txt file. Select it to convert it.")
+            print("- Yellow [FILE] = other file type; it cannot be selected for conversion.")
+            print("- Colors may not appear in terminals that do not support ANSI colors.")
         elif choice == "4":
             print("\nCOMMANDS")
             print("  python text_to_pdf.py                 Open this menu")
