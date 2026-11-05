@@ -232,9 +232,9 @@ def interactive_menu() -> int:
             print("- It does not upload, scan, or transmit your files.")
             print("- You choose the file yourself using the file picker.")
             print("\nFILE BROWSER COLORS (OPTION 2)")
-            print(blue + "- Blue [DIR] = folder/directory. Select it to open it." + menu_reset)
-            print(green + "- Green [TXT] = .txt file. Select it to convert it." + menu_reset)
-            print(yellow + "- Yellow [FILE] = other file type; it cannot be selected for conversion." + menu_reset)
+            print("\\033[1;34m" + "- Blue [DIR] = folder/directory. Select it to open it." + menu_reset)
+            print("\\033[1;32m" + "- Green [TXT] = .txt file. Select it to convert it." + menu_reset)
+            print("\\033[33m" + "- Yellow [FILE] = other file type; it cannot be selected for conversion." + menu_reset)
             print(white + "- Menu numbers are cyan; descriptions are white; headings are bright yellow." + menu_reset)
             print(white + "- Colors may not appear in terminals that do not support ANSI colors." + menu_reset)
         elif choice == "4":
