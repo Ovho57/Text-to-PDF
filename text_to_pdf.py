@@ -120,9 +120,23 @@ def choose_text_file() -> Path | None:
 
 
 def interactive_menu() -> int:
-    print("\n" + "=" * 52)
-    print("              TEXT-TO-PDF  |  HOME")
-    print("=" * 52)
+    # ANSI color codes work in Ubuntu and most modern terminals.
+    reset = "\\033[0m"
+    cyan = "\\033[96m"
+    magenta = "\\033[95m"
+    yellow = "\\033[93m"
+    green = "\\033[92m"
+    print()
+    print(cyan + "████████╗███████╗██╗  ██╗████████╗" + reset)
+    print(cyan + "╚══██╔══╝██╔════╝╚██╗██╔╝╚══██╔══╝" + reset)
+    print(magenta + "   ██║   █████╗   ╚███╔╝    ██║   " + reset)
+    print(magenta + "   ██║   ██╔══╝   ██╔██╗    ██║   " + reset)
+    print(yellow + "   ██║   ███████╗██╔╝ ██╗   ██║   " + reset)
+    print(yellow + "   ╚═╝   ╚══════╝╚═╝  ╚═╝   ╚═╝   " + reset)
+    print(green + "       T E X T  -  T O  -  P D F" + reset)
+    print(cyan + "╔══════════════════════════════════════════════╗" + reset)
+    print(cyan + "║" + reset + "       " + magenta + "YOUR TEXT. YOUR PDF. YOUR CONTROL." + reset + "       " + cyan + "║" + reset)
+    print(cyan + "╚══════════════════════════════════════════════╝" + reset)
     print("Convert your plain-text files into clean PDFs.")
     print("Your files stay on this computer; nothing is uploaded.")
     while True:
