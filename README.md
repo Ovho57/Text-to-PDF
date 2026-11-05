@@ -31,7 +31,7 @@ Need to turn text notes, documentation, or plain-text files into a PDF without a
 > **Platform:** Linux / Ubuntu only. Requires Python 3.10 or newer.  
 > **File support:** UTF-8 `.txt` files. Word (`.docx`) and Markdown (`.md`) files are not directly supported; save or export them as plain text first.
 
-## ✨ Features
+## Features
 
 | Feature | What it does |
 | --- | --- |
@@ -45,7 +45,7 @@ Need to turn text notes, documentation, or plain-text files into a PDF without a
 | Flexible output | Save PDFs beside the source or in another folder |
 | Overwrite protection | Avoid replacing an existing PDF without approval |
 
-## 🐧 Quick start
+## Quick start
 
 ### 1. Install dependencies
 
@@ -78,7 +78,7 @@ python3 text_to_pdf.py
 
 That’s it — follow the terminal menu.
 
-## 🧭 Menu overview
+## Menu overview
 
 | Option | Action |
 | --- | --- |
@@ -99,7 +99,7 @@ When using menu option **2**, entries are color-coded to help you navigate:
 
 Enter a folder’s number to open it, `..` to move to its parent folder, or `q` to cancel. Select a `.txt` file by entering its number.
 
-## 📄 Usage
+## Usage
 
 ### Convert a file directly
 
@@ -139,7 +139,7 @@ Wrap the path in quotation marks:
 python3 text_to_pdf.py "Biology notes.txt"
 ```
 
-## 🪟 Ubuntu on Windows (WSL)
+## Ubuntu on Windows (WSL)
 
 If you use Ubuntu through Windows Subsystem for Linux, Windows drives are usually mounted under `/mnt/`.
 
@@ -203,7 +203,7 @@ cp ~/Text-to-PDF/notes.pdf "/mnt/c/Users/YOUR_USERNAME/Desktop/"
 
 Replace example filenames and usernames with your own.
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### `python3: command not found`
 
@@ -263,23 +263,23 @@ Choose another output filename or use `--overwrite` if you want to replace the e
 
 Use a directory you own, such as your Ubuntu home folder or Windows Desktop through WSL. Avoid running the converter with `sudo`.
 
-## 🧪 Verify ReportLab
+## Verify ReportLab
 
 ```bash
 python3 -c "import reportlab; print('ReportLab is installed')"
 ```
 
-## 🧑‍💻 Run tests
+## Run tests
 
 ```bash
 python3 -m unittest -v
 ```
 
-## 🤝 Contributions and feedback
+## Contributions and feedback
 
 Found a bug, have an idea, or want to improve the project? Feel free to open an issue or submit a pull request. Feedback and contributions are welcome.
 
-## 📜 License
+## License
 
 This project is licensed under the **MIT License**. See [LICENSE](LICENSE).
 
