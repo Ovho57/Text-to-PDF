@@ -8,12 +8,6 @@ import sys
 from pathlib import Path
 from xml.sax.saxutils import escape
 
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.units import mm
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
-
-
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Convert local UTF-8 .txt files into PDFs. Run without arguments for the interactive menu."
